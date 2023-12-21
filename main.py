@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 import time
-
-pin = 4
-time_block = 30
+import configparser
+config = configparser.RawConfigParser()
+config.read('conf') #
+pin = int(config.get('PHONE','key_type_lenght'))
+time_block = int(config.get('PHONE','time'))
 attempt = 0
-max_attempt = 5
-scdmax_attempt = 1
+max_attempt = int(config.get('PHONE','max_attempt_before_time'))
+scdmax_attempt = int(config.get('PHONE','second_max_attempt_before_wait_time'))
 
 counter = 0
 NULL_CHAR = chr(0)
@@ -91,7 +93,6 @@ values = {
 ',':'write_report(NULL_CHAR*2 +chr(54)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
 '.':'write_report(NULL_CHAR*2 +chr(55)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
 '/':'write_report(NULL_CHAR*2 +chr(56)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
-'0':'write_report(chr(2)+NULL_CHAR+chr(50)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
 ':':'write_report(chr(2)+NULL_CHAR+chr(51)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
 '"':'write_report(chr(2)+NULL_CHAR+chr(52)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
 '<':'write_report(chr(2)+NULL_CHAR+chr(54)+NULL_CHAR*5)\nwrite_report(NULL_CHAR * 8)',
@@ -146,4 +147,3 @@ for i in read_wordlist("wordlist_pin4.txt"):
       if counter == pin:
         exec(values['_'])
     attempt += 1
-

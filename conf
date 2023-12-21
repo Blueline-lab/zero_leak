@@ -1,0 +1,5 @@
+[PHONE]
+key_type_lenght = 4
+time = 30
+max_attempt_before_time = 5
+second_max_attempt_before_wait_time = 1
